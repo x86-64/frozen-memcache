@@ -115,6 +115,8 @@ static ssize_t memcache_destroy(machine_t *machine){ // {{{
 	memcache_userdata     *userdata          = (memcache_userdata *)machine->userdata;
 	
 	thread_data_destroy(&userdata->thread_data);
+	if(userdata->config)
+		free(userdata->config);
 	free(userdata);
 	return 0;
 } // }}}
@@ -266,6 +268,7 @@ static ssize_t memcache_handler(machine_t *machine, request_t *request){ // {{{
 				data_free(output);
 			
 		read_err:
+			free(value.data);
 			data_free(&free_key);
 			return ret;
 		
