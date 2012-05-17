@@ -252,10 +252,9 @@ static ssize_t memcache_handler(machine_t *machine, request_t *request){ // {{{
 			}
 			
 			// deref
-			fastcall_getdata r_getdata = { { 3, ACTION_GETDATA } };
-			if( (ret = data_query(output, &r_getdata)) < 0)
+			data_realholder(ret, output, output);
+			if(ret < 0)
 				goto read_err;
-			output = r_getdata.data;
 			
 			need_free = (output->type == TYPE_VOIDT) ? 1 : 0;
 			
