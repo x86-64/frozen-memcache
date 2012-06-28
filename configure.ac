@@ -18,7 +18,7 @@ AM_CONDITIONAL([HAVE_FROZEN], [test "$FROZEN" = 1])
 modulesdir=${libexecdir}/frozen/
 AC_SUBST(modulesdir)
 
-PKG_CHECK_MODULES(DEPS, libmemcached >= 0.8.0) AC_SUBST(DEPS_CFLAGS) AC_SUBST(DEPS_LIBS)
+PKG_CHECK_MODULES(DEPS, libmemcached >= 0.39) AC_SUBST(DEPS_CFLAGS) AC_SUBST(DEPS_LIBS)
 
 esyscmd(./build/build_errors.pl)
 

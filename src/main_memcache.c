@@ -20,7 +20,7 @@
  * @code
  * {
  *              class                   = "modules/memcache",
- *              config                  = "--SERVER=1.2.3.4:1234",// configuration string for libmemcached
+ *              config                  = "1.2.3.4:1234",         // configuration string for libmemcached
  *              key                     = (hashkey_t)"input",     // hashkey for key, default "key"
  *              value                   = (hashkey_t)"output",    // hashkey for value, default "value"
  *              
@@ -57,7 +57,8 @@ typedef struct memcache_userdata {
 } memcache_userdata;
 
 typedef struct memcache_threaddata {
-	memcached_st          *mc;
+	memcached_server_list_st  sv;
+	memcached_st             *mc;
 } memcache_threaddata;
 
 typedef struct memcache_get_ctx {
@@ -72,15 +73,20 @@ typedef struct slice {
 	uintmax_t              size;
 } slice;
 
-
 static void *  memcache_threaddata_create(memcache_userdata *userdata){ // {{{
+	ssize_t                   rc;
 	memcache_threaddata      *threaddata;
 	
 	if( (threaddata = malloc(sizeof(memcache_threaddata))) == NULL)
 		return NULL;
 	
-	if( (threaddata->mc = memcached(userdata->config, strlen(userdata->config))) == NULL)
+	if( (threaddata->sv = memcached_servers_parse(userdata->config)) == NULL )
 		goto error;
+	
+	if( (threaddata->mc = memcached_create(NULL)) == NULL)
+		goto error;
+         
+	rc = memcached_server_push(threaddata->mc, threaddata->sv);
 	
 	return threaddata;
 
@@ -89,6 +95,7 @@ error:
 	return NULL;
 } // }}}
 static void    memcache_threaddata_destroy(memcache_threaddata *threaddata){ // {{{
+	memcached_server_list_free(threaddata->sv);
 	memcached_free(threaddata->mc);
 	free(threaddata);
 } // }}}

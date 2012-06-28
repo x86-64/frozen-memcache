@@ -1,13 +1,13 @@
 
 static err_item errs_list[] = {
- { -320, "src/main_memcache.c: memcache_delete error" },
- { -302, "src/main_memcache.c: memcache_set error" },
- { -217, "src/main_memcache.c: no action specified" },
- { -190, "src/main_memcache.c: memcache_value_unserialize unknown output datatype: pass output key or set value_type in configuration" },
- { -184, "src/main_memcache.c: memcache_value_unserialize wrong output data supplied" },
- { -148, "src/main_memcache.c: memcache configuration error: wrong management modes configuration" },
- { -142, "src/main_memcache.c: invalid config specified" },
- { -100, "src/main_memcache.c: calloc failed" },
+ { -326, "src/main_memcache.c: memcache_delete error" },
+ { -308, "src/main_memcache.c: memcache_set error" },
+ { -223, "src/main_memcache.c: no action specified" },
+ { -196, "src/main_memcache.c: memcache_value_unserialize unknown output datatype: pass output key or set value_type in configuration" },
+ { -190, "src/main_memcache.c: memcache_value_unserialize wrong output data supplied" },
+ { -154, "src/main_memcache.c: memcache configuration error: wrong management modes configuration" },
+ { -148, "src/main_memcache.c: invalid config specified" },
+ { -106, "src/main_memcache.c: calloc failed" },
 
 	{ 0, NULL }
 };
